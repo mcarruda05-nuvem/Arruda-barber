@@ -1,0 +1,12 @@
+ARRUDA BARBER — PRIMEIRA VERSÃO DO APLICATIVO
+
+Este pacote transforma o site em um PWA (aplicativo web instalável), compatível com Android e iPhone.
+
+IMPORTANTE: para instalar no celular, o conteúdo precisa estar publicado em um endereço HTTPS. O pacote ainda não está publicado.
+
+ANDROID: abra o endereço publicado no Chrome e escolha “Instalar app” ou “Adicionar à tela inicial”.
+iPHONE: abra no Safari, toque em Compartilhar e escolha “Adicionar à Tela de Início”.
+
+O que esta versão já tem: identidade Arruda Barber, páginas de serviços/horários/contato, pedido de agendamento via WhatsApp, ícones e suporte PWA/offline básico.
+
+Próxima etapa para o sistema completo: criar autenticação segura para Felipe e Arruda e banco de dados online para sincronizar entradas, saídas e lucro dos últimos 30 dias entre os celulares. Isso requer configurar um serviço de backend; não foi simulado nem incluído como se já funcionasse.

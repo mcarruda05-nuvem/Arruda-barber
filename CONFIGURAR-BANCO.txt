@@ -1,0 +1,33 @@
+ARRUDA BARBER — CONFIGURAÇÃO DO FINANCEIRO COMPARTILHADO
+
+O aplicativo agora tem telas de login e integração com Supabase. Para sincronizar os dados entre celulares, ainda é necessário criar e configurar o banco online. Não coloque senhas de usuários dentro do código.
+
+1) Crie um projeto no Supabase (supabase.com). O plano gratuito pode servir para começar; consulte os limites atuais antes de uso comercial.
+2) No painel do projeto, abra SQL Editor, cole o conteúdo de supabase-schema.sql e execute.
+3) Em Project Settings / API, copie Project URL e a chave publicável (anon/public). NÃO copie a service_role/secret key.
+4) Abra config.js e substitua:
+   COLE_AQUI_A_URL_DO_PROJETO
+   COLE_AQUI_A_CHAVE_PUBLICA_ANON
+5) No painel Authentication, deixe o cadastro público (Sign ups) desativado.
+6) Crie dois usuários em Authentication / Users:
+   - e-mail do Felipe, senha definida por ele, metadata JSON: {"name":"Felipe"}
+   - e-mail do Arruda, senha definida por ele, metadata JSON: {"name":"Arruda"}
+   Use a opção de adicionar usuário e confirme o e-mail conforme as opções do painel.
+7) Para cada usuário, insira uma linha na tabela profiles usando o mesmo UUID do usuário:
+   Felipe: id = UUID do usuário Felipe; name = Felipe
+   Arruda: id = UUID do usuário Arruda; name = Arruda
+   Isso pode ser feito em Table Editor / profiles.
+8) Publique a pasta inteira em hospedagem HTTPS estática. O app é PWA:
+   - Android: abra o endereço HTTPS no Chrome e escolha Instalar aplicativo / Adicionar à tela inicial.
+   - iPhone: abra o endereço HTTPS no Safari, toque em Compartilhar e Adicionar à Tela de Início.
+
+COMO FUNCIONA
+- Os dois logins veem os mesmos totais e histórico dos últimos 30 dias.
+- Cada lançamento registra quem o criou.
+- Um barbeiro só pode inserir lançamentos identificados com seu próprio perfil.
+- Esta versão não permite editar ou apagar lançamentos já salvos.
+- Agendamentos são pedidos enviados ao WhatsApp, não uma agenda com disponibilidade automática.
+- A chave publicável/anon pode ficar no frontend porque as políticas RLS protegem as tabelas. NUNCA use service_role/secret key no app.
+
+IMPORTANTE
+O arquivo entregue ainda não está conectado ao seu projeto Supabase nem publicado na internet. A sincronização só funcionará depois de completar os passos acima e publicar em HTTPS. Não compartilhe senhas por aqui; você pode configurar tudo no painel e me passar somente a URL do projeto e a chave publicável se quiser ajuda com a configuração do arquivo.

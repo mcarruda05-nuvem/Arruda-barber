@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111111"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Arruda Barber">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Arruda Barber</title>
+<style>
+:root{--bg:#101010;--panel:#1b1b1b;--gold:#d5ad62;--cream:#f4efe5;--muted:#b9b2a6;--line:#ffffff20;--red:#e58b80}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--cream);font:15px Arial,sans-serif;padding-bottom:82px}
+header{position:sticky;top:0;z-index:3;background:#111e;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.top{max-width:980px;margin:auto;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:900;letter-spacing:2px;font-size:20px}.logo span,.gold{color:var(--gold)}
+main{max-width:980px;margin:auto;padding:22px 16px}.screen{display:none}.screen.active{display:block}
+.hero{background:linear-gradient(135deg,#252017,#171717 65%);border:1px solid #8d6e3c55;border-radius:14px;padding:26px;margin-bottom:20px}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:bold}.hero h1{font-size:36px;line-height:1.05;margin:12px 0}.hero p,.muted{color:var(--muted);line-height:1.55}
+h2{font-size:25px;margin:8px 0 18px}h3{margin:0 0 9px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:12px}
+.stat{font-size:24px;font-weight:800;color:var(--gold);margin-top:7px}
+button,.button{border:0;border-radius:8px;background:var(--gold);color:#17130c;font-weight:800;padding:13px 16px;cursor:pointer;font-size:14px}
+button.secondary,.button.secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+button.danger{background:#5b2925;color:#ffe4df}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+label{display:block;color:var(--muted);font-size:13px;margin:12px 0 6px}
+input,select,textarea{width:100%;background:#101010;border:1px solid #ffffff35;border-radius:8px;padding:12px;color:var(--cream);font:inherit}
+form button{width:100%;margin-top:16px}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:5;background:#171717f5;border-top:1px solid var(--line);display:none;justify-content:center;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+nav button{background:transparent;color:var(--muted);padding:9px 8px;flex:1;max-width:150px;font-size:11px}
+nav button.active{color:var(--gold);background:#d5ad6218}nav button span{display:block;font-size:18px;margin-bottom:3px}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.entry{border-bottom:1px solid var(--line);padding:12px 0}.entry:last-child{border:0}
+.small{font-size:12px;color:var(--muted)}.empty{padding:18px;text-align:center;color:var(--muted)}
+.notice{border:1px solid #d5ad6255;background:#d5ad6212;border-radius:9px;padding:12px;color:#e9d8b7;font-size:13px;line-height:1.5}
+.error{color:var(--red);font-size:13px;min-height:18px}.hidden{display:none!important}
+a{color:var(--gold)}.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:38px}.hero h1{font-size:48px}}
+@media(max-width:560px){.service-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="logo">ARRUDA <span>BARBER</span></div><button id="logout" class="secondary hidden">Sair</button></div></header>
+<main>
+<section id="home" class="screen active">
+ <div class="hero"><div class="eyebrow">ESTILO • CUIDADO • ATITUDE</div><h1>Seu estilo.<br><span class="gold">Seu momento.</span></h1><p>Bem-vindo à Arruda Barber. Agende seu corte e venha renovar o visual.</p><div class="actions"><button onclick="show('booking')">Agendar horário</button><button class="secondary" onclick="show('finance')">Área dos barbeiros</button></div></div>
+ <h2>Nossos serviços</h2><div class="service-grid">
+  <div class="card"><div class="eyebrow">01 / CORTE</div><h3>Corte adulto</h3><p class="muted">Corte personalizado.</p><strong class="gold">Consulte o valor</strong></div>
+  <div class="card"><div class="eyebrow">02 / CORTE</div><h3>Corte infantil</h3><p class="muted">Corte caprichado para os pequenos.</p><strong class="gold">Consulte o valor</strong></div>
+  <div class="card"><div class="eyebrow">03 / BARBA</div><h3>Barba</h3><p class="muted">Cuidado para manter o visual alinhado.</p><strong class="gold">Consulte o valor</strong></div>
+ </div>
+ <div class="card"><h3>Contato e endereço</h3><p class="muted">Rua Agostinho Scolari, 1083</p><p><a href="https://wa.me/555992294941">Arruda: (55) 99229-4941</a></p><p><a href="https://wa.me/555991274993">Felipe: (55) 99127-4993</a></p></div>
+</section>
+<section id="booking" class="screen">
+ <div class="eyebrow">RESERVE SEU HORÁRIO</div><h2>Agendamento</h2><div class="card"><form id="bookingForm">
+ <label>Seu nome</label><input name="nome" required placeholder="Nome do cliente">
+ <label>Serviço</label><select name="servico" required><option value="">Selecione</option><option>Corte adulto</option><option>Corte infantil</option><option>Barba</option><option>Outro</option></select>
+ <label>Barbeiro</label><select name="barbeiro"><option>Felipe</option><option>Arruda</option><option>Primeiro disponível</option></select>
+ <label>Dia desejado</label><input type="date" name="dia" required><label>Horário desejado</label><input type="time" name="hora" required>
+ <label>Observação</label><textarea name="obs" rows="2" placeholder="Opcional"></textarea><button type="submit">Enviar pedido pelo WhatsApp</button></form>
+ <p class="small">O horário só fica confirmado após resposta da barbearia.</p></div>
+</section>
+<section id="finance" class="screen">
+ <div id="loginPanel" class="card"><div class="eyebrow">ÁREA RESTRITA</div><h2>Entrar no financeiro</h2>
+ <p class="muted">Acesso exclusivo para Felipe e Arruda.</p>
+ <div class="notice">Use o e-mail e a senha que forem cadastrados para você. As contas serão criadas pelo administrador; não existe cadastro público.</div>
+ <form id="loginForm"><label>E-mail</label><input name="email" type="email" autocomplete="username" required placeholder="seu@email.com"><label>Senha</label><input name="password" type="password" autocomplete="current-password" required placeholder="Sua senha"><button type="submit">Entrar</button></form><p id="loginError" class="error"></p>
+ </div>
+ <div id="financePanel" class="hidden">
+  <div class="row"><div><div class="eyebrow">CONTROLE INTERNO</div><h2>Financeiro · 30 dias</h2></div><div class="small" id="loggedAs"></div></div>
+  <div class="notice">Os dados são compartilhados entre os dois acessos. Cada lançamento fica identificado com o barbeiro responsável.</div>
+  <div class="grid">
+   <div class="card"><div class="small">Entradas</div><div class="stat" id="income">R$ 0,00</div></div>
+   <div class="card"><div class="small">Saídas</div><div class="stat" id="expense">R$ 0,00</div></div>
+   <div class="card"><div class="small">Lucro</div><div class="stat" id="profit">R$ 0,00</div></div>
+  </div>
+  <div class="card"><h3>Adicionar movimentação</h3><form id="entryForm">
+   <label>Tipo</label><select name="type"><option value="entrada">Entrada</option><option value="saida">Saída</option></select>
+   <label>Descrição</label><input name="description" required maxlength="100" placeholder="Ex.: corte, produto, aluguel">
+   <label>Valor (R$)</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="0,00">
+   <label>Data</label><input name="entry_date" type="date" required><button type="submit">Salvar no financeiro compartilhado</button>
+  </form><p id="entryError" class="error"></p></div>
+  <div class="card"><div class="row"><h3>Histórico</h3><button id="refresh" class="secondary">Atualizar</button></div><div id="history" class="empty">Carregando...</div></div>
+ </div>
+</section>
+<section id="hours" class="screen"><div class="eyebrow">ATENDIMENTO</div><h2>Horários</h2><div class="card"><h3>Agendamento mediante confirmação</h3><p class="muted">Entre em contato para consultar os horários disponíveis. Os dias e horários oficiais ainda precisam ser configurados.</p><a class="button" href="https://wa.me/555992294941">Consultar no WhatsApp</a></div></section>
+</main>
+<nav id="tabs"><button class="active" data-screen="home"><span>⌂</span>Início</button><button data-screen="booking"><span>▣</span>Agendar</button><button data-screen="finance"><span>R$</span>Financeiro</button><button data-screen="hours"><span>◷</span>Horários</button></nav>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script>
+<script>
+const $=s=>document.querySelector(s);let supabase=null,currentUser=null,currentProfile=null;
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.screen===id));window.scrollTo(0,0);if(id==='finance')refreshSession()}
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.screen)));
+const now=new Date(),localDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+$('input[name="dia"]').min=localDate;$('input[name="entry_date"]').value=localDate;
+$('#bookingForm').addEventListener('submit',e=>{e.preventDefault();const d=new FormData(e.target);const msg=`Olá, Arruda Barber! Gostaria de solicitar um agendamento.%0ANome: ${encodeURIComponent(d.get('nome'))}%0AServiço: ${encodeURIComponent(d.get('servico'))}%0ABarbeiro: ${encodeURIComponent(d.get('barbeiro'))}%0ADia: ${encodeURIComponent(d.get('dia'))}%0AHorário: ${encodeURIComponent(d.get('hora'))}%0AObservação: ${encodeURIComponent(d.get('obs')||'Nenhuma')}`;window.open('https://wa.me/555992294941?text='+msg,'_blank','noopener')});
+function configReady(){const c=window.ARRUDA_CONFIG||{};return c.SUPABASE_URL?.startsWith('https://')&&c.SUPABASE_ANON_KEY&&!c.SUPABASE_ANON_KEY.startsWith('COLE_')}
+if(configReady()&&window.supabase){supabase=window.supabase.createClient(window.ARRUDA_CONFIG.SUPABASE_URL,window.ARRUDA_CONFIG.SUPABASE_ANON_KEY)}
+function money(v){return Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function showLogin(msg=''){ $('#loginPanel').classList.remove('hidden');$('#financePanel').classList.add('hidden');$('#logout').classList.add('hidden');$('#loginError').textContent=msg; }
+function showFinance(){ $('#loginPanel').classList.add('hidden');$('#financePanel').classList.remove('hidden');$('#logout').classList.remove('hidden');$('#loggedAs').textContent=currentProfile?.name||currentUser?.email||''; }
+async function refreshSession(){
+ if(!configReady()||!supabase){showLogin('A configuração do banco online ainda não foi concluída. Siga o arquivo CONFIGURAR-BANCO.txt.');return}
+ const {data:{session},error}=await supabase.auth.getSession();if(error||!session){currentUser=null;showLogin();return}
+ currentUser=session.user;const {data:profile,error:pe}=await supabase.from('profiles').select('name').eq('id',currentUser.id).single();
+ if(pe||!profile){showLogin('Usuário sem perfil cadastrado. Peça ao administrador para revisar o cadastro.');return}
+ currentProfile=profile;showFinance();await loadEntries();
+}
+$('#loginForm').addEventListener('submit',async e=>{e.preventDefault();if(!supabase){showLogin('Banco online não configurado. Veja CONFIGURAR-BANCO.txt.');return}
+ const d=new FormData(e.target);const {error}=await supabase.auth.signInWithPassword({email:d.get('email'),password:d.get('password')});
+ if(error){showLogin('Não foi possível entrar. Confira e-mail e senha.');return}e.target.reset();await refreshSession()});
+$('#logout').addEventListener('click',async()=>{if(supabase)await supabase.auth.signOut();currentUser=null;currentProfile=null;showLogin();show('home')});
+$('#entryForm').addEventListener('submit',async e=>{e.preventDefault();$('#entryError').textContent='';if(!currentUser||!currentProfile)return;
+ const d=new FormData(e.target);const payload={type:d.get('type'),description:d.get('description'),amount:Number(d.get('amount')),entry_date:d.get('entry_date'),created_by:currentUser.id,barber:currentProfile.name};
+ const {error}=await supabase.from('movements').insert(payload);if(error){$('#entryError').textContent='Não foi possível salvar. Verifique sua conexão e as permissões do banco.';return}
+ e.target.reset();$('input[name="entry_date"]').value=localDate;await loadEntries()});
+async function loadEntries(){if(!supabase||!currentUser)return;$('#history').textContent='Carregando...';
+ const start=new Date();start.setDate(start.getDate()-29);const from=start.getFullYear()+'-'+String(start.getMonth()+1).padStart(2,'0')+'-'+String(start.getDate()).padStart(2,'0');
+ const {data,error}=await supabase.from('movements').select('id,type,description,amount,entry_date,barber').gte('entry_date',from).order('entry_date',{ascending:false}).order('created_at',{ascending:false});
+ if(error){$('#history').textContent='Não foi possível carregar o histórico.';return}
+ const rows=data||[],income=rows.filter(x=>x.type==='entrada').reduce((a,x)=>a+Number(x.amount),0),expense=rows.filter(x=>x.type==='saida').reduce((a,x)=>a+Number(x.amount),0);
+ $('#income').textContent=money(income);$('#expense').textContent=money(expense);$('#profit').textContent=money(income-expense);
+ const hist=$('#history');hist.replaceChildren();if(!rows.length){hist.className='empty';hist.textContent='Nenhuma movimentação nos últimos 30 dias.';return}hist.className='';
+ rows.forEach(x=>{const row=document.createElement('div');row.className='entry row';const left=document.createElement('div');const desc=document.createElement('strong');desc.textContent=x.description;const meta=document.createElement('div');meta.className='small';meta.textContent=x.entry_date.split('-').reverse().join('/')+' · '+x.barber;left.append(desc,meta);const val=document.createElement('strong');val.className=x.type==='entrada'?'gold':'';val.textContent=(x.type==='entrada'?'+ ':'− ')+money(x.amount);row.append(left,val);hist.append(row)});
+}
+$('#refresh').addEventListener('click',loadEntries);
+if(supabase)supabase.auth.onAuthStateChange(()=>setTimeout(refreshSession,0));
+if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+refreshSession();
+</script>
+</body></html>
