@@ -388,3 +388,492 @@ refreshSession();
 </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arruda Barber</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #101010;
+    color: #fff;
+}
+
+header {
+    background: #080808;
+    padding: 25px 15px;
+    text-align: center;
+    border-bottom: 2px solid #d5ad62;
+}
+
+header h1 {
+    color: #d5ad62;
+    font-size: 30px;
+    letter-spacing: 2px;
+}
+
+header p {
+    color: #ccc;
+    margin-top: 8px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background: #181818;
+}
+
+nav a {
+    color: #d5ad62;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+section {
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 20px;
+    background: #1b1b1b;
+    border: 1px solid #383838;
+    border-radius: 10px;
+}
+
+h2 {
+    color: #d5ad62;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.servico {
+    display: flex;
+    justify-content: space-between;
+    padding: 13px 5px;
+    border-bottom: 1px solid #444;
+}
+
+.servico span:last-child {
+    color: #d5ad62;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 7px;
+    color: #ddd;
+}
+
+input, select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #101010;
+    color: white;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 6px;
+    background: #d5ad62;
+    color: #111;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #edc779;
+}
+
+.contato {
+    text-align: center;
+    line-height: 2;
+}
+
+.contato strong {
+    color: #d5ad62;
+}
+
+.admin {
+    background: #141414;
+}
+
+.registro {
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #444;
+    border-radius: 6px;
+}
+
+.total {
+    color: #d5ad62;
+    font-size: 23px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #999;
+}
+
+.oculto {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    section {
+        margin: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>ARRUDA BARBER</h1>
+    <p>Seu estilo, nossa missão.</p>
+</header>
+
+<nav>
+    <a href="#servicos">Serviços</a>
+    <a href="#agendamento">Agendamento</a>
+    <a href="#horarios">Horários</a>
+    <a href="#contato">Contato</a>
+</nav>
+
+<section id="servicos">
+    <h2>Nossos Serviços</h2>
+
+    <div id="listaServicos"></div>
+</section>
+
+<section id="agendamento">
+    <h2>Agende seu horário</h2>
+
+    <form id="formAgendamento">
+
+        <label>Nome do cliente</label>
+        <input type="text" id="cliente" required placeholder="Digite seu nome">
+
+        <label>Escolha o serviço</label>
+        <select id="servico" required>
+            <option value="">Selecione um serviço</option>
+        </select>
+
+        <label>Escolha o barbeiro</label>
+        <select id="barbeiro" required>
+            <option value="">Selecione um profissional</option>
+            <option>Arruda</option>
+            <option>Felipe</option>
+            <option>Thalita</option>
+            <option>Barbeiro 4</option>
+        </select>
+
+        <label>Data</label>
+        <input type="date" id="data" required>
+
+        <label>Horário</label>
+        <select id="horario" required>
+            <option value="">Selecione um horário</option>
+        </select>
+
+        <button type="submit">Agendar pelo WhatsApp</button>
+
+    </form>
+</section>
+
+<section id="horarios">
+    <h2>Horários de Atendimento</h2>
+
+    <div class="contato">
+        <p><strong>Terça a sexta-feira</strong></p>
+        <p>09:00 às 11:45</p>
+        <p>14:00 às 19:30</p>
+
+        <br>
+
+        <p><strong>Sábado</strong></p>
+        <p>08:30 às 11:45</p>
+        <p>14:00 às 19:00</p>
+    </div>
+</section>
+
+<section id="contato">
+    <h2>Entre em contato</h2>
+
+    <div class="contato">
+        <p><strong>Endereço:</strong></p>
+        <p>Rua Agostinho Scolari, 1083</p>
+
+        <br>
+
+        <p><strong>Arruda:</strong> (55) 99229-4942</p>
+        <p><strong>Felipe:</strong> (55) 99127-4993</p>
+        <p><strong>Thalita:</strong> (55) 99169-2449</p>
+    </div>
+</section>
+
+<section class="admin">
+    <h2>Painel Administrativo</h2>
+
+    <label>Senha de acesso</label>
+    <input type="password" id="senhaAdmin" placeholder="Digite a senha">
+
+    <button onclick="entrarAdmin()">Entrar</button>
+
+    <div id="painelAdmin" class="oculto">
+
+        <h2 style="margin-top:25px">Controle Financeiro</h2>
+
+        <label>Nome do cliente</label>
+        <input type="text" id="nomeFinanceiro">
+
+        <label>Serviço realizado</label>
+        <select id="servicoFinanceiro"></select>
+
+        <label>Barbeiro</label>
+        <select id="barbeiroFinanceiro">
+            <option>Arruda</option>
+            <option>Felipe</option>
+            <option>Thalita</option>
+            <option>Barbeiro 4</option>
+        </select>
+
+        <label>Forma de pagamento</label>
+        <select id="pagamento">
+            <option>Pix</option>
+            <option>Cartão</option>
+            <option>Dinheiro</option>
+        </select>
+
+        <button onclick="adicionarRegistro()">Adicionar serviço</button>
+
+        <div id="registros"></div>
+
+        <div class="total" id="total">Total: R$ 0,00</div>
+
+    </div>
+</section>
+
+<footer>
+    © Arruda Barber - Todos os direitos reservados.
+</footer>
+
+<script>
+const WHATSAPP = "5555992294942";
+const SENHA_ADMIN = "1234";
+
+const servicos = [
+    ["Cabelo", 35],
+    ["Cabelo e barba", 55],
+    ["Barba", 25],
+    ["Sobrancelha com corte", 40],
+    ["Apenas sobrancelha", 10],
+    ["Pezinhos", 15],
+    ["1 pente e pezinho", 20],
+    ["2 pentes e pezinho", 25]
+];
+
+const listaServicos = document.getElementById("listaServicos");
+const seletorServico = document.getElementById("servico");
+const seletorFinanceiro = document.getElementById("servicoFinanceiro");
+
+servicos.forEach(item => {
+    const nome = item[0];
+    const valor = item[1];
+
+    listaServicos.innerHTML += `
+        <div class="servico">
+            <span>${nome}</span>
+            <span>R$ ${valor.toFixed(2).replace(".", ",")}</span>
+        </div>
+    `;
+
+    seletorServico.innerHTML += `
+        <option value="${nome}">${nome} - R$ ${valor.toFixed(2).replace(".", ",")}</option>
+    `;
+
+    seletorFinanceiro.innerHTML += `
+        <option value="${nome}">${nome}</option>
+    `;
+});
+
+// Horários disponíveis
+const seletorHorario = document.getElementById("horario");
+
+function gerarHorarios(inicio, fim) {
+    let horarios = [];
+    let atual = inicio;
+
+    while (atual <= fim) {
+        horarios.push(atual);
+
+        let partes = atual.split(":");
+        let hora = Number(partes[0]);
+        let minuto = Number(partes[1]) + 30;
+
+        if (minuto >= 60) {
+            hora++;
+            minuto -= 60;
+        }
+
+        atual =
+            String(hora).padStart(2, "0") +
+            ":" +
+            String(minuto).padStart(2, "0");
+    }
+
+    return horarios;
+}
+
+const horarios = [
+    ...gerarHorarios("09:00", "11:30"),
+    ...gerarHorarios("14:00", "19:00")
+];
+
+horarios.forEach(h => {
+    seletorHorario.innerHTML += `<option>${h}</option>`;
+});
+
+// Agendamento pelo WhatsApp
+document.getElementById("formAgendamento").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const cliente = document.getElementById("cliente").value;
+    const servico = document.getElementById("servico").value;
+    const barbeiro = document.getElementById("barbeiro").value;
+    const data = document.getElementById("data").value;
+    const horario = document.getElementById("horario").value;
+
+    const mensagem =
+        `Olá! Gostaria de agendar um horário.%0A%0A` +
+        `Nome: ${cliente}%0A` +
+        `Serviço: ${servico}%0A` +
+        `Profissional: ${barbeiro}%0A` +
+        `Data: ${data}%0A` +
+        `Horário: ${horario}`;
+
+    const url = `https://wa.me/${WHATSAPP}?text=${mensagem}`;
+
+    window.open(url, "_blank");
+});
+
+// Painel administrativo
+function entrarAdmin() {
+    const senha = document.getElementById("senhaAdmin").value;
+
+    if (senha === SENHA_ADMIN) {
+        document.getElementById("painelAdmin").classList.remove("oculto");
+        carregarRegistros();
+    } else {
+        alert("Senha incorreta!");
+    }
+}
+
+// Registros financeiros salvos no navegador
+function obterRegistros() {
+    return JSON.parse(localStorage.getItem("arrudaRegistros") || "[]");
+}
+
+function salvarRegistros(registros) {
+    localStorage.setItem("arrudaRegistros", JSON.stringify(registros));
+}
+
+function adicionarRegistro() {
+    const nome = document.getElementById("nomeFinanceiro").value.trim();
+    const servico = document.getElementById("servicoFinanceiro").value;
+    const barbeiro = document.getElementById("barbeiroFinanceiro").value;
+    const pagamento = document.getElementById("pagamento").value;
+
+    if (!nome) {
+        alert("Informe o nome do cliente!");
+        return;
+    }
+
+    const item = servicos.find(s => s[0] === servico);
+
+    const registros = obterRegistros();
+
+    registros.push({
+        nome: nome,
+        servico: servico,
+        barbeiro: barbeiro,
+        pagamento: pagamento,
+        valor: item[1],
+        data: new Date().toLocaleDateString("pt-BR")
+    });
+
+    salvarRegistros(registros);
+
+    document.getElementById("nomeFinanceiro").value = "";
+
+    carregarRegistros();
+}
+
+function carregarRegistros() {
+    const registros = obterRegistros();
+    const area = document.getElementById("registros");
+
+    area.innerHTML = "";
+
+    let total = 0;
+
+    registros.forEach((r, index) => {
+        total += Number(r.valor);
+
+        area.innerHTML += `
+            <div class="registro">
+                <strong>${r.nome}</strong><br>
+                Serviço: ${r.servico}<br>
+                Barbeiro: ${r.barbeiro}<br>
+                Pagamento: ${r.pagamento}<br>
+                Data: ${r.data}<br>
+                Valor: R$ ${Number(r.valor).toFixed(2).replace(".", ",")}
+                <button onclick="excluirRegistro(${index})">Excluir registro</button>
+            </div>
+        `;
+    });
+
+    document.getElementById("total").innerText =
+        "Total: R$ " + total.toFixed(2).replace(".", ",");
+}
+
+function excluirRegistro(index) {
+    if (!confirm("Deseja excluir este registro?")) return;
+
+    const registros = obterRegistros();
+    registros.splice(index, 1);
+
+    salvarRegistros(registros);
+    carregarRegistros();
+}
+</script>
+
+</body>
+</html>
