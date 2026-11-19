@@ -1,877 +1,240 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#111111">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Arruda Barber">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Arruda Barber</title>
-<style>
-:root{--bg:#101010;--panel:#1b1b1b;--gold:#d5ad62;--cream:#f4efe5;--muted:#b9b2a6;--line:#ffffff20;--red:#e58b80}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--cream);font:15px Arial,sans-serif;padding-bottom:82px}
-header{position:sticky;top:0;z-index:3;background:#111e;border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
-.top{max-width:980px;margin:auto;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-weight:900;letter-spacing:2px;font-size:20px}.logo span,.gold{color:var(--gold)}
-main{max-width:980px;margin:auto;padding:22px 16px}
-.screen{display:none}.screen.active{display:block}
-.hero{background:linear-gradient(135deg,#252017,#171717 65%);border:1px solid #8d6e3c55;border-radius:14px;padding:26px;margin-bottom:20px}
-.eyebrow{font-size:11px;letter-spacing:3px;color:var(--gold);font-weight:bold}
-.hero h1{font-size:36px;line-height:1.05;margin:12px 0}
-.hero p,.muted{color:var(--muted);line-height:1.55}
-h2{font-size:25px;margin:8px 0 18px}h3{margin:0 0 9px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:17px;margin-bottom:12px}
-.stat{font-size:24px;font-weight:800;color:var(--gold);margin-top:7px}
-button,.button{border:0;border-radius:8px;background:var(--gold);color:#17130c;font-weight:800;padding:13px 16px;cursor:pointer;font-size:14px}
-button.secondary,.button.secondary{background:transparent;color:var(--gold);border:1px solid var(--gold)}
-button.danger{background:#5b2925;color:#ffe4df}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
-label{display:block;color:var(--muted);font-size:13px;margin:12px 0 6px}
-input,select,textarea{width:100%;background:#101010;border:1px solid #ffffff35;border-radius:8px;padding:12px;color:var(--cream);font:inherit}
-form button{width:100%;margin-top:16px}
-nav{position:fixed;bottom:0;left:0;right:0;z-index:5;background:#171717f5;border-top:1px solid var(--line);display:none;justify-content:center;padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
-nav button{background:transparent;color:var(--muted);padding:9px 8px;flex:1;max-width:150px;font-size:11px}
-nav button.active{color:var(--gold);background:#d5ad6218}
-nav button span{display:block;font-size:18px;margin-bottom:3px}
-.row{display:flex;justify-content:space-between;gap:12px;align-items:center}
-.entry{border-bottom:1px solid var(--line);padding:12px 0}.entry:last-child{border:0}
-.small{font-size:12px;color:var(--muted)}.empty{padding:18px;text-align:center;color:var(--muted)}
-.notice{border:1px solid #d5ad6255;background:#d5ad6212;border-radius:9px;padding:12px;color:#e9d8b7;font-size:13px;line-height:1.5}
-.error{color:var(--red);font-size:13px;min-height:18px}.hidden{display:none!important}
-a{color:var(--gold)}
-.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.service-grid .card{margin:0}
-.price{display:block;color:var(--gold);font-weight:800;margin-top:12px}
-@media(min-width:700px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.hero{padding:38px}.hero h1{font-size:48px}}
-@media(max-width:560px){.service-grid{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}}
-@media(max-width:360px){.service-grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<header>
-  <div class="top">
-    <div class="logo">ARRUDA <span>BARBER</span></div>
-    <button id="logout" class="secondary hidden">Sair</button>
-  </div>
-</header>
-
-<main>
-<section id="home" class="screen active">
-  <div class="hero">
-    <div class="eyebrow">ESTILO • CUIDADO • ATITUDE</div>
-    <h1>Seu estilo.<br><span class="gold">Seu momento.</span></h1>
-    <p>Bem-vindo à Arruda Barber. Agende seu corte e venha renovar o visual.</p>
-    <div class="actions">
-      <button onclick="show('booking')">Agendar horário</button>
-      <button class="secondary" onclick="show('finance')">Área dos barbeiros</button>
-    </div>
-  </div>
-
-  <h2>Nossos serviços</h2>
-  <div class="service-grid">
-    <div class="card"><div class="eyebrow">01 / CORTE</div><h3>Cabelo</h3><span class="price">R$ 35,00</span></div>
-    <div class="card"><div class="eyebrow">02 / COMBO</div><h3>Cabelo e barba</h3><span class="price">R$ 55,00</span></div>
-    <div class="card"><div class="eyebrow">03 / BARBA</div><h3>Barba</h3><span class="price">R$ 25,00</span></div>
-    <div class="card"><div class="eyebrow">04 / DETALHE</div><h3>Sobrancelha com corte</h3><span class="price">R$ 5,00</span></div>
-    <div class="card"><div class="eyebrow">05 / DETALHE</div><h3>Apenas sobrancelha</h3><span class="price">R$ 10,00</span></div>
-    <div class="card"><div class="eyebrow">06 / ACABAMENTO</div><h3>Pezinhos</h3><span class="price">R$ 15,00</span></div>
-    <div class="card"><div class="eyebrow">07 / ACABAMENTO</div><h3>1 pente e pezinho</h3><span class="price">R$ 20,00</span></div>
-    <div class="card"><div class="eyebrow">08 / ACABAMENTO</div><h3>2 pentes e pezinho</h3><span class="price">R$ 25,00</span></div>
-  </div>
-
-  <div class="card" style="margin-top:18px">
-    <h3>Contato e endereço</h3>
-    <p class="muted">Rua Agostinho Scolari, 1083</p>
-    <p><a href="https://wa.me/55992294942">Arruda: (55) 99229-4942</a></p>
-    <p><a href="https://wa.me/55991274993">Felipe: (55) 99127-4993</a></p>
-    <p><a href="https://wa.me/55991692449">Thalita: (55) 99169-2449</a></p>
-  </div>
-</section>
-
-<section id="booking" class="screen">
-  <div class="eyebrow">RESERVE SEU HORÁRIO</div>
-  <h2>Agendamento</h2>
-  <div class="card">
-    <form id="bookingForm">
-      <label>Seu nome</label>
-      <input name="nome" required maxlength="80" placeholder="Nome do cliente">
-
-      <label>Seu WhatsApp</label>
-      <input name="whatsapp" type="tel" required inputmode="tel" placeholder="(55) 99999-9999">
-
-      <label>Serviço</label>
-      <select name="servico" required>
-        <option value="">Selecione um serviço</option>
-        <option value="Cabelo — R$ 35,00">Cabelo — R$ 35,00</option>
-        <option value="Cabelo e barba — R$ 55,00">Cabelo e barba — R$ 55,00</option>
-        <option value="Barba — R$ 25,00">Barba — R$ 25,00</option>
-        <option value="Sobrancelha com corte — R$ 5,00">Sobrancelha com corte — R$ 5,00</option>
-        <option value="Apenas sobrancelha — R$ 10,00">Apenas sobrancelha — R$ 10,00</option>
-        <option value="Pezinhos — R$ 15,00">Pezinhos — R$ 15,00</option>
-        <option value="1 pente e pezinho — R$ 20,00">1 pente e pezinho — R$ 20,00</option>
-        <option value="2 pentes e pezinho — R$ 25,00">2 pentes e pezinho — R$ 25,00</option>
-      </select>
-
-      <label>Barbeiro</label>
-      <select name="barbeiro" required>
-        <option value="">Selecione o profissional</option>
-        <option value="Arruda">Arruda</option>
-        <option value="Felipe">Felipe</option>
-        <option value="Thalita">Thalita</option>
-      </select>
-
-      <label>Dia desejado</label>
-      <input type="date" name="dia" required>
-
-      <label>Horário desejado</label>
-      <input type="time" name="hora" required>
-
-      <label>Observação</label>
-      <textarea name="obs" rows="2" maxlength="300" placeholder="Opcional"></textarea>
-
-      <button type="submit">Enviar pedido pelo WhatsApp</button>
-      <p id="bookingError" class="error" aria-live="polite"></p>
-    </form>
-    <p class="small">Atendimento de terça a sábado, das 9h às 12h e das 14h às 19h30. O horário só fica confirmado após resposta da barbearia.</p>
-  </div>
-</section>
-
-<section id="finance" class="screen">
-  <div id="loginPanel" class="card">
-    <div class="eyebrow">ÁREA RESTRITA</div>
-    <h2>Entrar no financeiro</h2>
-    <p class="muted">Acesso exclusivo para Felipe e Arruda.</p>
-    <div class="notice">Use o e-mail e a senha cadastrados para você. As contas são criadas pelo administrador; não existe cadastro público.</div>
-    <form id="loginForm">
-      <label>E-mail</label><input name="email" type="email" autocomplete="username" required placeholder="seu@email.com">
-      <label>Senha</label><input name="password" type="password" autocomplete="current-password" required placeholder="Sua senha">
-      <button type="submit">Entrar</button>
-    </form>
-    <p id="loginError" class="error"></p>
-  </div>
-
-  <div id="financePanel" class="hidden">
-    <div class="row"><div><div class="eyebrow">CONTROLE INTERNO</div><h2>Financeiro · 30 dias</h2></div><div class="small" id="loggedAs"></div></div>
-    <div class="notice">Os dados são compartilhados entre os dois acessos. Cada lançamento fica identificado com o barbeiro responsável.</div>
-    <div class="grid">
-      <div class="card"><div class="small">Entradas</div><div class="stat" id="income">R$ 0,00</div></div>
-      <div class="card"><div class="small">Saídas</div><div class="stat" id="expense">R$ 0,00</div></div>
-      <div class="card"><div class="small">Lucro</div><div class="stat" id="profit">R$ 0,00</div></div>
-    </div>
-    <div class="card">
-      <h3>Adicionar movimentação</h3>
-      <form id="entryForm">
-        <label>Tipo</label><select name="type"><option value="entrada">Entrada</option><option value="saida">Saída</option></select>
-        <label>Descrição</label><input name="description" required maxlength="100" placeholder="Ex.: corte, produto, aluguel">
-        <label>Valor (R$)</label><input name="amount" type="number" min="0.01" step="0.01" required placeholder="0,00">
-        <label>Data</label><input name="entry_date" type="date" required>
-        <button type="submit">Salvar no financeiro compartilhado</button>
-      </form>
-      <p id="entryError" class="error"></p>
-    </div>
-    <div class="card"><div class="row"><h3>Histórico</h3><button id="refresh" class="secondary" type="button">Atualizar</button></div><div id="history" class="empty">Carregando...</div></div>
-  </div>
-</section>
-
-<section id="hours" class="screen">
-  <div class="eyebrow">ATENDIMENTO</div>
-  <h2>Horários</h2>
-  <div class="card">
-    <h3>Funcionamento</h3>
-    <p class="muted">Terça a sábado: 9h às 12h e 14h às 19h30.</p>
-    <p class="muted">Domingo e segunda: fechado.</p>
-    <button onclick="show('booking')">Solicitar agendamento</button>
-  </div>
-</section>
-</main>
-
-<nav id="tabs">
-  <button class="active" data-screen="home"><span>⌂</span>Início</button>
-  <button data-screen="booking"><span>▣</span>Agendar</button>
-  <button data-screen="finance"><span>R$</span>Financeiro</button>
-  <button data-screen="hours"><span>◷</span>Horários</button>
-</nav>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./config.js"></script>
-<script>
-const $ = s => document.querySelector(s);
-let supabase = null, currentUser = null, currentProfile = null;
-
-const barberWhatsApp = {
-  "Arruda": "55992294942",
-  "Felipe": "55991274993",
-  "Thalita": "55991692449"
-};
-
-function show(id) {
-  document.querySelectorAll('.screen').forEach(x => x.classList.toggle('active', x.id === id));
-  document.querySelectorAll('nav button').forEach(x => x.classList.toggle('active', x.dataset.screen === id));
-  window.scrollTo(0, 0);
-  if (id === 'finance') refreshSession();
-}
-document.querySelectorAll('nav button').forEach(b => b.addEventListener('click', () => show(b.dataset.screen)));
-
-const now = new Date();
-const localDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0,10);
-$('input[name="dia"]').min = localDate;
-$('input[name="entry_date"]').value = localDate;
-
-$('#bookingForm').addEventListener('submit', e => {
-  e.preventDefault();
-  const d = new FormData(e.target);
-  const barber = d.get('barbeiro');
-  const phone = barberWhatsApp[barber];
-
-  if (!phone) {
-    $('#bookingError').textContent = 'Selecione um barbeiro para continuar.';
-    return;
-  }
-
-  const dateParts = String(d.get('dia')).split('-');
-  const readableDate = dateParts.length === 3 ? `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}` : d.get('dia');
-  const message = [
-    'Olá, ' + barber + '! Gostaria de solicitar um agendamento na Arruda Barber.',
-    'Nome: ' + d.get('nome'),
-    'WhatsApp do cliente: ' + d.get('whatsapp'),
-    'Serviço: ' + d.get('servico'),
-    'Barbeiro: ' + barber,
-    'Dia: ' + readableDate,
-    'Horário: ' + d.get('hora'),
-    'Observação: ' + (d.get('obs') || 'Nenhuma')
-  ].join('\n');
-
-  const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
-  const newWindow = window.open(url, '_blank');
-  if (!newWindow) window.location.href = url;
-});
-
-function configReady() {
-  const c = window.ARRUDA_CONFIG || {};
-  return c.SUPABASE_URL?.startsWith('https://') && c.SUPABASE_ANON_KEY && !c.SUPABASE_ANON_KEY.startsWith('COLE_');
-}
-if (configReady() && window.supabase) {
-  supabase = window.supabase.createClient(window.ARRUDA_CONFIG.SUPABASE_URL, window.ARRUDA_CONFIG.SUPABASE_ANON_KEY);
-}
-function money(v) {
-  return Number(v || 0).toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
-}
-function showLogin(msg = '') {
-  $('#loginPanel').classList.remove('hidden');
-  $('#financePanel').classList.add('hidden');
-  $('#logout').classList.add('hidden');
-  $('#loginError').textContent = msg;
-}
-function showFinance() {
-  $('#loginPanel').classList.add('hidden');
-  $('#financePanel').classList.remove('hidden');
-  $('#logout').classList.remove('hidden');
-  $('#loggedAs').textContent = currentProfile?.name || currentUser?.email || '';
-}
-async function refreshSession() {
-  if (!configReady() || !supabase) {
-    showLogin('A configuração do banco online ainda não foi concluída. Siga o arquivo CONFIGURAR-BANCO.txt.');
-    return;
-  }
-  const {data:{session}, error} = await supabase.auth.getSession();
-  if (error || !session) {
-    currentUser = null;
-    showLogin();
-    return;
-  }
-  currentUser = session.user;
-  const {data:profile, error:pe} = await supabase.from('profiles').select('name').eq('id', currentUser.id).single();
-  if (pe || !profile) {
-    showLogin('Usuário sem perfil cadastrado. Peça ao administrador para revisar o cadastro.');
-    return;
-  }
-  currentProfile = profile;
-  showFinance();
-  await loadEntries();
-}
-$('#loginForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  if (!supabase) {
-    showLogin('Banco online não configurado. Veja CONFIGURAR-BANCO.txt.');
-    return;
-  }
-  const d = new FormData(e.target);
-  const {error} = await supabase.auth.signInWithPassword({email:d.get('email'), password:d.get('password')});
-  if (error) {
-    showLogin('Não foi possível entrar. Confira e-mail e senha.');
-    return;
-  }
-  e.target.reset();
-  await refreshSession();
-});
-$('#logout').addEventListener('click', async () => {
-  if (supabase) await supabase.auth.signOut();
-  currentUser = null;
-  currentProfile = null;
-  showLogin();
-  show('home');
-});
-$('#entryForm').addEventListener('submit', async e => {
-  e.preventDefault();
-  $('#entryError').textContent = '';
-  if (!currentUser || !currentProfile) return;
-  const d = new FormData(e.target);
-  const payload = {
-    type:d.get('type'),
-    description:d.get('description'),
-    amount:Number(d.get('amount')),
-    entry_date:d.get('entry_date'),
-    created_by:currentUser.id,
-    barber:currentProfile.name
-  };
-  const {error} = await supabase.from('movements').insert(payload);
-  if (error) {
-    $('#entryError').textContent = 'Não foi possível salvar. Verifique sua conexão e as permissões do banco.';
-    return;
-  }
-  e.target.reset();
-  $('input[name="entry_date"]').value = localDate;
-  await loadEntries();
-});
-async function loadEntries() {
-  if (!supabase || !currentUser) return;
-  $('#history').textContent = 'Carregando...';
-  const start = new Date();
-  start.setDate(start.getDate() - 29);
-  const from = start.getFullYear() + '-' + String(start.getMonth()+1).padStart(2,'0') + '-' + String(start.getDate()).padStart(2,'0');
-  const {data,error} = await supabase.from('movements').select('id,type,description,amount,entry_date,barber').gte('entry_date',from).order('entry_date',{ascending:false}).order('created_at',{ascending:false});
-  if (error) {
-    $('#history').textContent = 'Não foi possível carregar o histórico.';
-    return;
-  }
-  const rows = data || [];
-  const income = rows.filter(x => x.type === 'entrada').reduce((a,x) => a + Number(x.amount), 0);
-  const expense = rows.filter(x => x.type === 'saida').reduce((a,x) => a + Number(x.amount), 0);
-  $('#income').textContent = money(income);
-  $('#expense').textContent = money(expense);
-  $('#profit').textContent = money(income - expense);
-  const hist = $('#history');
-  hist.replaceChildren();
-  if (!rows.length) {
-    hist.className = 'empty';
-    hist.textContent = 'Nenhuma movimentação nos últimos 30 dias.';
-    return;
-  }
-  hist.className = '';
-  rows.forEach(x => {
-    const row = document.createElement('div');
-    row.className = 'entry row';
-    const left = document.createElement('div');
-    const desc = document.createElement('strong');
-    desc.textContent = x.description;
-    const meta = document.createElement('div');
-    meta.className = 'small';
-    meta.textContent = x.entry_date.split('-').reverse().join('/') + ' · ' + x.barber;
-    left.append(desc, meta);
-    const val = document.createElement('strong');
-    val.className = x.type === 'entrada' ? 'gold' : '';
-    val.textContent = (x.type === 'entrada' ? '+ ' : '− ') + money(x.amount);
-    row.append(left, val);
-    hist.append(row);
-  });
-}
-$('#refresh').addEventListener('click', loadEntries);
-if (supabase) supabase.auth.onAuthStateChange(() => setTimeout(refreshSession, 0));
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
-}
-refreshSession();
-</script>
-</body>
-</html>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
 <title>Arruda Barber</title>
-
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#080808;
+ color:#fff;
+ font-family:Arial,sans-serif;
 }
-
-body {
-    font-family: Arial, sans-serif;
-    background: #101010;
-    color: #fff;
+header{
+ text-align:center;
+ padding:35px 15px 25px;
+ background:#111;
+ border-bottom:1px solid #b99143;
 }
-
-header {
-    background: #080808;
-    padding: 25px 15px;
-    text-align: center;
-    border-bottom: 2px solid #d5ad62;
+.logo{
+ color:#d5ad60;
+ font-size:34px;
+ font-weight:bold;
+ letter-spacing:3px;
 }
-
-header h1 {
-    color: #d5ad62;
-    font-size: 30px;
-    letter-spacing: 2px;
+header p{color:#bbb;letter-spacing:2px}
+main{
+ max-width:520px;
+ margin:25px auto;
+ padding:20px;
 }
-
-header p {
-    color: #ccc;
-    margin-top: 8px;
+h2{color:#d5ad60;text-align:center}
+label{
+ display:block;
+ margin:18px 0 8px;
+ color:#d5ad60;
+ font-weight:bold;
 }
-
-nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 15px;
-    background: #181818;
+input,select{
+ width:100%;
+ padding:15px;
+ border:1px solid #a98543;
+ border-radius:8px;
+ background:#171717;
+ color:white;
+ font-size:16px;
 }
-
-nav a {
-    color: #d5ad62;
-    text-decoration: none;
-    font-weight: bold;
+button{
+ width:100%;
+ margin-top:25px;
+ padding:17px;
+ background:#c49a4e;
+ color:#080808;
+ border:0;
+ border-radius:8px;
+ font-size:17px;
+ font-weight:bold;
+ cursor:pointer;
 }
-
-section {
-    max-width: 850px;
-    margin: 25px auto;
-    padding: 20px;
-    background: #1b1b1b;
-    border: 1px solid #383838;
-    border-radius: 10px;
+button:active{opacity:.8}
+.info{
+ margin-top:25px;
+ text-align:center;
+ color:#aaa;
+ font-size:13px;
 }
-
-h2 {
-    color: #d5ad62;
-    margin-bottom: 18px;
-    text-align: center;
-}
-
-.servico {
-    display: flex;
-    justify-content: space-between;
-    padding: 13px 5px;
-    border-bottom: 1px solid #444;
-}
-
-.servico span:last-child {
-    color: #d5ad62;
-    font-weight: bold;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 7px;
-    color: #ddd;
-}
-
-input, select {
-    width: 100%;
-    padding: 13px;
-    border-radius: 6px;
-    border: 1px solid #555;
-    background: #101010;
-    color: white;
-    font-size: 16px;
-}
-
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 18px;
-    border: none;
-    border-radius: 6px;
-    background: #d5ad62;
-    color: #111;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #edc779;
-}
-
-.contato {
-    text-align: center;
-    line-height: 2;
-}
-
-.contato strong {
-    color: #d5ad62;
-}
-
-.admin {
-    background: #141414;
-}
-
-.registro {
-    padding: 12px;
-    margin-top: 10px;
-    border: 1px solid #444;
-    border-radius: 6px;
-}
-
-.total {
-    color: #d5ad62;
-    font-size: 23px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 20px;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    color: #999;
-}
-
-.oculto {
-    display: none;
-}
-
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 25px;
-    }
-
-    section {
-        margin: 15px;
-    }
+footer{
+ text-align:center;
+ padding:25px;
+ color:#888;
+ border-top:1px solid #333;
 }
 </style>
 </head>
-
 <body>
 
 <header>
-    <h1>ARRUDA BARBER</h1>
-    <p>Seu estilo, nossa missão.</p>
+ <div class="logo">ARRUDA BARBER</div>
+ <p>ESTILO • QUALIDADE • TRADIÇÃO</p>
 </header>
 
-<nav>
-    <a href="#servicos">Serviços</a>
-    <a href="#agendamento">Agendamento</a>
-    <a href="#horarios">Horários</a>
-    <a href="#contato">Contato</a>
-</nav>
+<main>
+ <h2>Agende seu horário</h2>
 
-<section id="servicos">
-    <h2>Nossos Serviços</h2>
+ <label for="cliente">Seu nome</label>
+ <input id="cliente" type="text" placeholder="Digite seu nome">
 
-    <div id="listaServicos"></div>
-</section>
+ <label for="servico">Escolha o serviço</label>
+ <select id="servico">
+  <option value="">Selecione um serviço</option>
+  <option value="Cabelo" data-min="35">Cabelo — 35 minutos</option>
+  <option value="Cabelo e barba" data-min="55">Cabelo e barba — 55 minutos</option>
+  <option value="Barba" data-min="25">Barba — 25 minutos</option>
+  <option value="Sobrancelha com corte" data-min="5">Sobrancelha com corte — 5 minutos</option>
+  <option value="Apenas sobrancelha" data-min="10">Apenas sobrancelha — 10 minutos</option>
+  <option value="Pezinhos" data-min="15">Pezinhos — 15 minutos</option>
+  <option value="1 pente e pezinho" data-min="20">1 pente e pezinho — 20 minutos</option>
+  <option value="2 pentes e pezinho" data-min="25">2 pentes e pezinho — 25 minutos</option>
+ </select>
 
-<section id="agendamento">
-    <h2>Agende seu horário</h2>
+ <label for="profissional">Escolha o profissional</label>
+ <select id="profissional">
+  <option value="">Selecione</option>
+  <option value="Arruda">Arruda</option>
+  <option value="Felipe">Felipe</option>
+  <option value="Thalita">Thalita</option>
+ </select>
 
-    <form id="formAgendamento">
+ <label for="data">Escolha o dia</label>
+ <input id="data" type="date">
 
-        <label>Nome do cliente</label>
-        <input type="text" id="cliente" required placeholder="Digite seu nome">
+ <label for="horario">Escolha o horário</label>
+ <select id="horario">
+  <option value="">Primeiro escolha o serviço e o dia</option>
+ </select>
 
-        <label>Escolha o serviço</label>
-        <select id="servico" required>
-            <option value="">Selecione um serviço</option>
-        </select>
+ <button onclick="agendar()">AGENDAR PELO WHATSAPP</button>
 
-        <label>Escolha o barbeiro</label>
-        <select id="barbeiro" required>
-            <option value="">Selecione um profissional</option>
-            <option>Arruda</option>
-            <option>Felipe</option>
-            <option>Thalita</option>
-            <option>Barbeiro 4</option>
-        </select>
-
-        <label>Data</label>
-        <input type="date" id="data" required>
-
-        <label>Horário</label>
-        <select id="horario" required>
-            <option value="">Selecione um horário</option>
-        </select>
-
-        <button type="submit">Agendar pelo WhatsApp</button>
-
-    </form>
-</section>
-
-<section id="horarios">
-    <h2>Horários de Atendimento</h2>
-
-    <div class="contato">
-        <p><strong>Terça a sexta-feira</strong></p>
-        <p>09:00 às 11:45</p>
-        <p>14:00 às 19:30</p>
-
-        <br>
-
-        <p><strong>Sábado</strong></p>
-        <p>08:30 às 11:45</p>
-        <p>14:00 às 19:00</p>
-    </div>
-</section>
-
-<section id="contato">
-    <h2>Entre em contato</h2>
-
-    <div class="contato">
-        <p><strong>Endereço:</strong></p>
-        <p>Rua Agostinho Scolari, 1083</p>
-
-        <br>
-
-        <p><strong>Arruda:</strong> (55) 99229-4942</p>
-        <p><strong>Felipe:</strong> (55) 99127-4993</p>
-        <p><strong>Thalita:</strong> (55) 99169-2449</p>
-    </div>
-</section>
-
-<section class="admin">
-    <h2>Painel Administrativo</h2>
-
-    <label>Senha de acesso</label>
-    <input type="password" id="senhaAdmin" placeholder="Digite a senha">
-
-    <button onclick="entrarAdmin()">Entrar</button>
-
-    <div id="painelAdmin" class="oculto">
-
-        <h2 style="margin-top:25px">Controle Financeiro</h2>
-
-        <label>Nome do cliente</label>
-        <input type="text" id="nomeFinanceiro">
-
-        <label>Serviço realizado</label>
-        <select id="servicoFinanceiro"></select>
-
-        <label>Barbeiro</label>
-        <select id="barbeiroFinanceiro">
-            <option>Arruda</option>
-            <option>Felipe</option>
-            <option>Thalita</option>
-            <option>Barbeiro 4</option>
-        </select>
-
-        <label>Forma de pagamento</label>
-        <select id="pagamento">
-            <option>Pix</option>
-            <option>Cartão</option>
-            <option>Dinheiro</option>
-        </select>
-
-        <button onclick="adicionarRegistro()">Adicionar serviço</button>
-
-        <div id="registros"></div>
-
-        <div class="total" id="total">Total: R$ 0,00</div>
-
-    </div>
-</section>
+ <div class="info">
+  Atendimento de terça-feira a sábado<br>
+  A partir das 9h
+ </div>
+</main>
 
 <footer>
-    © Arruda Barber - Todos os direitos reservados.
+ ARRUDA BARBER © 2026
 </footer>
 
 <script>
-const WHATSAPP = "5555992294942";
-const SENHA_ADMIN = "1234";
+// Preencha os números de Arruda e Felipe antes de publicar.
+// Use somente números, incluindo 55 e o DDD.
+const telefones = {
+ "Arruda": "COLOQUE_AQUI_O_NUMERO_DO_ARRUDA",
+ "Felipe": "COLOQUE_AQUI_O_NUMERO_DO_FELIPE",
+ "Thalita": "55991692449"
+};
 
-const servicos = [
-    ["Cabelo", 35],
-    ["Cabelo e barba", 55],
-    ["Barba", 25],
-    ["Sobrancelha com corte", 40],
-    ["Apenas sobrancelha", 10],
-    ["Pezinhos", 15],
-    ["1 pente e pezinho", 20],
-    ["2 pentes e pezinho", 25]
-];
+// Horário de funcionamento provisório: 09h às 19h.
+const ABERTURA = 9 * 60;
+const FECHAMENTO = 19 * 60;
+const INTERVALO = 15;
 
-const listaServicos = document.getElementById("listaServicos");
-const seletorServico = document.getElementById("servico");
-const seletorFinanceiro = document.getElementById("servicoFinanceiro");
+const dataInput = document.getElementById("data");
+const servicoInput = document.getElementById("servico");
+const horarioInput = document.getElementById("horario");
 
-servicos.forEach(item => {
-    const nome = item[0];
-    const valor = item[1];
-
-    listaServicos.innerHTML += `
-        <div class="servico">
-            <span>${nome}</span>
-            <span>R$ ${valor.toFixed(2).replace(".", ",")}</span>
-        </div>
-    `;
-
-    seletorServico.innerHTML += `
-        <option value="${nome}">${nome} - R$ ${valor.toFixed(2).replace(".", ",")}</option>
-    `;
-
-    seletorFinanceiro.innerHTML += `
-        <option value="${nome}">${nome}</option>
-    `;
-});
-
-// Horários disponíveis
-const seletorHorario = document.getElementById("horario");
-
-function gerarHorarios(inicio, fim) {
-    let horarios = [];
-    let atual = inicio;
-
-    while (atual <= fim) {
-        horarios.push(atual);
-
-        let partes = atual.split(":");
-        let hora = Number(partes[0]);
-        let minuto = Number(partes[1]) + 30;
-
-        if (minuto >= 60) {
-            hora++;
-            minuto -= 60;
-        }
-
-        atual =
-            String(hora).padStart(2, "0") +
-            ":" +
-            String(minuto).padStart(2, "0");
-    }
-
-    return horarios;
+function dataLocal(d){
+ const ano=d.getFullYear();
+ const mes=String(d.getMonth()+1).padStart(2,"0");
+ const dia=String(d.getDate()).padStart(2,"0");
+ return `${ano}-${mes}-${dia}`;
 }
 
-const horarios = [
-    ...gerarHorarios("09:00", "11:30"),
-    ...gerarHorarios("14:00", "19:00")
-];
+const hoje=new Date();
+dataInput.min=dataLocal(hoje);
 
-horarios.forEach(h => {
-    seletorHorario.innerHTML += `<option>${h}</option>`;
-});
+function atualizarHorarios(){
+ horarioInput.innerHTML='<option value="">Selecione um horário</option>';
 
-// Agendamento pelo WhatsApp
-document.getElementById("formAgendamento").addEventListener("submit", function(e) {
-    e.preventDefault();
+ const data=dataInput.value;
+ const servico=servicoInput.options[servicoInput.selectedIndex];
+ const duracao=Number(servico.dataset.min);
 
-    const cliente = document.getElementById("cliente").value;
-    const servico = document.getElementById("servico").value;
-    const barbeiro = document.getElementById("barbeiro").value;
-    const data = document.getElementById("data").value;
-    const horario = document.getElementById("horario").value;
+ if(!data || !duracao){
+  horarioInput.innerHTML='<option value="">Escolha o serviço e o dia</option>';
+  return;
+ }
 
-    const mensagem =
-        `Olá! Gostaria de agendar um horário.%0A%0A` +
-        `Nome: ${cliente}%0A` +
-        `Serviço: ${servico}%0A` +
-        `Profissional: ${barbeiro}%0A` +
-        `Data: ${data}%0A` +
-        `Horário: ${horario}`;
+ const dia=new Date(data+"T12:00:00").getDay();
 
-    const url = `https://wa.me/${WHATSAPP}?text=${mensagem}`;
+ if(dia===0 || dia===1){
+  horarioInput.innerHTML='<option value="">Fechado neste dia. Atendemos de terça a sábado.</option>';
+  return;
+ }
 
-    window.open(url, "_blank");
-});
+ const agora=new Date();
+ const hojeSelecionado=data===dataLocal(agora);
+ let encontrou=false;
 
-// Painel administrativo
-function entrarAdmin() {
-    const senha = document.getElementById("senhaAdmin").value;
+ for(let minutos=ABERTURA; minutos+duracao<=FECHAMENTO; minutos+=INTERVALO){
+  if(hojeSelecionado){
+   const horaAtual=agora.getHours()*60+agora.getMinutes();
+   if(minutos<=horaAtual) continue;
+  }
 
-    if (senha === SENHA_ADMIN) {
-        document.getElementById("painelAdmin").classList.remove("oculto");
-        carregarRegistros();
-    } else {
-        alert("Senha incorreta!");
-    }
+  const h=String(Math.floor(minutos/60)).padStart(2,"0");
+  const m=String(minutos%60).padStart(2,"0");
+  const hora=`${h}:${m}`;
+
+  horarioInput.add(new Option(hora,hora));
+  encontrou=true;
+ }
+
+ if(!encontrou){
+  horarioInput.innerHTML='<option value="">Não há horários disponíveis neste dia</option>';
+ }
 }
 
-// Registros financeiros salvos no navegador
-function obterRegistros() {
-    return JSON.parse(localStorage.getItem("arrudaRegistros") || "[]");
-}
+dataInput.addEventListener("change",atualizarHorarios);
+servicoInput.addEventListener("change",atualizarHorarios);
 
-function salvarRegistros(registros) {
-    localStorage.setItem("arrudaRegistros", JSON.stringify(registros));
-}
+function agendar(){
+ const nome=document.getElementById("cliente").value.trim();
+ const servico=servicoInput.value;
+ const profissional=document.getElementById("profissional").value;
+ const data=dataInput.value;
+ const horario=horarioInput.value;
 
-function adicionarRegistro() {
-    const nome = document.getElementById("nomeFinanceiro").value.trim();
-    const servico = document.getElementById("servicoFinanceiro").value;
-    const barbeiro = document.getElementById("barbeiroFinanceiro").value;
-    const pagamento = document.getElementById("pagamento").value;
+ if(!nome || !servico || !profissional || !data || !horario){
+  alert("Preencha todos os campos para continuar.");
+  return;
+ }
 
-    if (!nome) {
-        alert("Informe o nome do cliente!");
-        return;
-    }
+ const numero=telefones[profissional];
 
-    const item = servicos.find(s => s[0] === servico);
+ if(!numero || numero.includes("COLOQUE_AQUI")){
+  alert("O WhatsApp deste profissional ainda precisa ser configurado. Entre em contato com a barbearia.");
+  return;
+ }
 
-    const registros = obterRegistros();
+ const partes=data.split("-");
+ const dataFormatada=`${partes[2]}/${partes[1]}/${partes[0]}`;
 
-    registros.push({
-        nome: nome,
-        servico: servico,
-        barbeiro: barbeiro,
-        pagamento: pagamento,
-        valor: item[1],
-        data: new Date().toLocaleDateString("pt-BR")
-    });
+ const mensagem=
+ `Olá, ${profissional}! Gostaria de confirmar meu agendamento na Arruda Barber.\n\n`+
+ `Nome: ${nome}\n`+
+ `Serviço: ${servico}\n`+
+ `Profissional: ${profissional}\n`+
+ `Data: ${dataFormatada}\n`+
+ `Horário: ${horario}\n\n`+
+ `Aguardo a confirmação.`;
 
-    salvarRegistros(registros);
-
-    document.getElementById("nomeFinanceiro").value = "";
-
-    carregarRegistros();
-}
-
-function carregarRegistros() {
-    const registros = obterRegistros();
-    const area = document.getElementById("registros");
-
-    area.innerHTML = "";
-
-    let total = 0;
-
-    registros.forEach((r, index) => {
-        total += Number(r.valor);
-
-        area.innerHTML += `
-            <div class="registro">
-                <strong>${r.nome}</strong><br>
-                Serviço: ${r.servico}<br>
-                Barbeiro: ${r.barbeiro}<br>
-                Pagamento: ${r.pagamento}<br>
-                Data: ${r.data}<br>
-                Valor: R$ ${Number(r.valor).toFixed(2).replace(".", ",")}
-                <button onclick="excluirRegistro(${index})">Excluir registro</button>
-            </div>
-        `;
-    });
-
-    document.getElementById("total").innerText =
-        "Total: R$ " + total.toFixed(2).replace(".", ",");
-}
-
-function excluirRegistro(index) {
-    if (!confirm("Deseja excluir este registro?")) return;
-
-    const registros = obterRegistros();
-    registros.splice(index, 1);
-
-    salvarRegistros(registros);
-    carregarRegistros();
+ const link=`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+ window.location.href=link;
 }
 </script>
 
